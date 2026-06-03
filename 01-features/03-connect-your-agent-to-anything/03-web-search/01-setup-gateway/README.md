@@ -80,6 +80,16 @@ export COGNITO_SCOPE="agentcore-websearch/invoke"
 export AWS_DEFAULT_REGION="us-east-1"
 ```
 
+```bash
+#export AGENTCORE_GATEWAY_URL="https://naga-web-search-gw-jpeyqm6nni.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp"
+#export COGNITO_DOMAIN="us-east-16ay8pbcw2"
+#export COGNITO_CLIENT_ID="n0gmrlojshfmc059dck71583f"
+#export COGNITO_CLIENT_SECRET="s9bt641phqs1t7bie4lvg80sah9st50f6c3ooeksf0ri6d7f5po"
+#export COGNITO_SCOPE="agentcore-websearch/invoke"
+#export AWS_DEFAULT_REGION="us-east-1"
+```
+
+
 Export these before running the other demos.
 
 ## IAM Permissions

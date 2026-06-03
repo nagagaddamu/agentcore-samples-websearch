@@ -2,11 +2,18 @@
 Shared Strands agent using AgentCore Web Search Tool via Gateway.
 
 Used as the common demo agent across web search sub-demos:
-  - 02-strands-agent/web_search_strands.py
+  - 03-strands-agent/web_search_strands.py
 
 The agent connects to an AgentCore Gateway that exposes the Web Search Tool
 as an MCP-compliant connector target. Tools are discovered dynamically via
 the MCP tools/list endpoint.
+
+Environment variables:
+    BEDROCK_MODEL_ID  — (optional) Bedrock inference profile ID or ARN;
+                        must be a cross-region inference profile (e.g. us.*, eu.*, ap.*)
+                        or an inference profile ARN — on-demand model IDs are not supported.
+                        Defaults to us.anthropic.claude-sonnet-4-5-20250514-v1:0
+    AWS_DEFAULT_REGION — AWS region (default: us-east-1)
 """
 
 import os
@@ -21,7 +28,8 @@ from utils.gateway_auth import create_streamable_http_transport
 
 REGION = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
 MODEL_ID = os.getenv(
-    "BEDROCK_MODEL_ID", "us.anthropic.claude-sonnet-4-20250514-v1:0"
+    "BEDROCK_MODEL_ID", "global.anthropic.claude-sonnet-4-6"
+    
 )
 
 SYSTEM_PROMPT = """You are a helpful research assistant with access to real-time web search.

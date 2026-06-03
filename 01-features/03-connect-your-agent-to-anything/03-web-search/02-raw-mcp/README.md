@@ -2,7 +2,7 @@
 
 ## Overview
 
-This demo calls the AgentCore Gateway directly using the MCP protocol — no agent framework involved. It's the simplest way to verify your Gateway and Web Search Tool target are working correctly.
+This demo calls the AgentCore Gateway directly over the MCP protocol — no agent framework involved. It's the simplest way to verify your Gateway and Web Search Tool target infrastructure are working correctly.
 
 ```
 ┌──────────────────┐   tools/list    ┌─────────────────────────────────┐

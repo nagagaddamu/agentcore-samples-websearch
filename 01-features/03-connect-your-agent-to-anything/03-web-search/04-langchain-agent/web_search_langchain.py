@@ -20,6 +20,8 @@ Environment variables required:
     COGNITO_CLIENT_ID      — Cognito app client ID
     COGNITO_CLIENT_SECRET  — Cognito app client secret
     COGNITO_SCOPE          — OAuth scope string
+    BEDROCK_MODEL_ID       — (optional) Bedrock inference profile ID or ARN;
+                             defaults to us.anthropic.claude-sonnet-4-5-20250514-v1:0
 
 IAM permissions required:
     bedrock:InvokeModel (for Claude Sonnet 4)
@@ -39,13 +41,13 @@ from utils.gateway_auth import get_oauth_token
 
 from langchain_aws import ChatBedrockConverse
 from langchain_mcp_adapters.client import MultiServerMCPClient
-from langgraph.prebuilt import create_react_agent
+from langgraph.prebuilt import create_react_agent  # noqa: E402 — stable in langgraph>=1.0
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
 REGION = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
 MODEL_ID = os.getenv(
-    "BEDROCK_MODEL_ID", "us.anthropic.claude-sonnet-4-20250514-v1:0"
+    "BEDROCK_MODEL_ID", "global.anthropic.claude-sonnet-4-6"
 )
 GATEWAY_URL = os.getenv("AGENTCORE_GATEWAY_URL", "")
 
@@ -69,7 +71,7 @@ async def run_agent(query: str):
     )
 
     # Connect to the Gateway as an MCP client
-    async with MultiServerMCPClient(
+    client = MultiServerMCPClient(
         {
             "web-search": {
                 "transport": "streamable_http",
@@ -77,24 +79,24 @@ async def run_agent(query: str):
                 "headers": {"Authorization": f"Bearer {token}"},
             }
         }
-    ) as client:
-        tools = client.get_tools()
-        print(f"  Discovered {len(tools)} tool(s)")
+    )
+    tools = await client.get_tools()
+    print(f"  Discovered {len(tools)} tool(s)")
 
-        # Create and run the agent
-        agent = create_react_agent(model, tools=tools)
-        result = await agent.ainvoke(
-            {"messages": [{"role": "user", "content": query}]}
-        )
+    # Create and run the agent
+    agent = create_react_agent(model, tools=tools)
+    result = await agent.ainvoke(
+        {"messages": [{"role": "user", "content": query}]}
+    )
 
-        # Print the final response
-        print("\n[Agent Response]")
-        print("-" * 60)
-        final_message = result["messages"][-1]
-        if hasattr(final_message, "content"):
-            print(final_message.content)
-        else:
-            print(str(final_message))
+    # Print the final response
+    print("\n[Agent Response]")
+    print("-" * 60)
+    final_message = result["messages"][-1]
+    if hasattr(final_message, "content"):
+        print(final_message.content)
+    else:
+        print(str(final_message))
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -123,7 +125,7 @@ def main():
     asyncio.run(run_agent(args.query))
 
     print("\n" + "=" * 60)
-    print("Demo complete!")
+    print("Web Search with a LangChain Agent Demo Complete.!")
     print("=" * 60)
 
 

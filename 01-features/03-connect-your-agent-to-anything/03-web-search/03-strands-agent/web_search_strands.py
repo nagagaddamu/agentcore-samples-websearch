@@ -101,7 +101,7 @@ def main():
             run_query(agent, q)
 
     print("\n" + "=" * 60)
-    print("Demo complete!")
+    print("Web Search with a Strands AI Agent Demo complete!")
     print("=" * 60)
 
 

@@ -41,7 +41,7 @@ from strands.tools.mcp.mcp_client import MCPClient
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-DEFAULT_QUERY = "What is today's news around the world?"
+DEFAULT_QUERY = "what is tesla stock price right now?"
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────

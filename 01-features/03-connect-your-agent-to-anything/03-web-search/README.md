@@ -76,8 +76,27 @@ The Web Search Tool uses the **connector** target type — a fully AWS-managed i
 | [01-setup-gateway/](01-setup-gateway/) | boto3 (SDK) | Create IAM role, Cognito, Gateway, and Web Search target |
 | [02-raw-mcp/](02-raw-mcp/) | MCP protocol | Direct tool discovery and invocation without an agent |
 | [03-strands-agent/](03-strands-agent/) | Strands Agents | Full agent loop with automatic tool selection and cited responses |
-| [04-langchain-agent/](04-langchain-agent/) | LangChain + LangGraph | Same integration using LangChain's MCP adapter |
+| [04-langchain-agent/](04-langchain-agent/) | LangChain + LangGraph |  Full agent loop integration using LangChain's MCP adapter |
 | [05-cleanup/](05-cleanup/) | boto3 (SDK) | Delete all resources created by the setup |
+
+## Prerequisites
+
+Before running the agent demos (steps 3–4 in Quick Start), your AWS account must have model access enabled for the Bedrock model you intend to use.
+
+**Default model**: `us.anthropic.claude-sonnet-4-5-20250514-v1:0` (cross-region inference profile)
+
+To use a different model, export `BEDROCK_MODEL_ID` before running any agent demo:
+
+```bash
+export BEDROCK_MODEL_ID="us.anthropic.claude-3-5-sonnet-20241022-v2:0"
+```
+
+> **Note:** On-demand model IDs (e.g. `anthropic.claude-sonnet-4-5-20250929-v1:0`) are not supported directly — you must use a cross-region inference profile ID (prefixed with `us.`, `eu.`, or `ap.`) or an inference profile ARN. See [Supported models and Regions for cross-Region inference](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html) for the full list.
+
+To enable model access in your account:
+1. Open the [Amazon Bedrock console](https://console.aws.amazon.com/bedrock/)
+2. Go to **Model access** in the left navigation
+3. Request access for the model you want to use
 
 ## Quick Start
 
@@ -94,6 +113,9 @@ export COGNITO_CLIENT_ID="..."
 export COGNITO_CLIENT_SECRET="..."
 export COGNITO_SCOPE="agentcore-websearch/invoke"
 export AWS_DEFAULT_REGION="us-east-1"
+
+# Optional: override the default Bedrock model
+export BEDROCK_MODEL_ID="us.anthropic.claude-3-5-sonnet-20241022-v2:0"
 
 # Step 3: Verify with raw MCP calls
 python 02-raw-mcp/raw_mcp_call.py
