@@ -1,0 +1,4 @@
+boto3
+mcp
+requests
+strands-agents>=0.1.8

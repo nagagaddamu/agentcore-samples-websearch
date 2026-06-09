@@ -2,10 +2,11 @@
 
 ## Overview
 Amazon Bedrock AgentCore Tools provide enterprise-grade capabilities that enhance AI agents' ability to perform complex 
-tasks securely and efficiently. This suite includes two primary tools: 
+tasks securely and efficiently. This suite includes three tools: 
 
-- Amazon Bedrock AgentCore Code Interpreter and 
+- Amazon Bedrock AgentCore Code Interpreter
 - Amazon Bedrock AgentCore Browser Tool
+- Amazon Bedrock AgentCore Web Search Tool
 
 ## Amazon Bedrock AgentCore Code Interpreter
 
@@ -48,7 +49,32 @@ tasks securely and efficiently. This suite includes two primary tools:
 - Large-scale data processing and monitoring
 - Secure code execution for AI agents in enterprise settings
 
+## Amazon Bedrock AgentCore Web Search Tool
+
+### Key Features
+
+1. **Real-time Information Access**: Retrieve current web results with titles, URLs, snippets, and publication dates — no frozen training data.
+
+2. **Zero Infrastructure Management**: No search APIs to provision, no scaling to configure. Expose web search through AgentCore Gateway as a fully managed MCP connector.
+
+3. **Framework Agnostic**: Works with Strands Agents, LangChain, LangGraph, CrewAI, or any MCP-compatible client.
+
+### Benefits
+
+- **Grounded Responses**: Agents cite live sources rather than hallucinating outdated facts.
+- **Critical for Time-Sensitive Use Cases**: CVE scanning, earnings research, regulatory monitoring — all require data that doesn't exist in training sets.
+- **MCP-Native Discovery**: Agents discover and invoke the tool via standard `tools/list` and `tools/call` — no custom integration code.
+
+## Use Cases
+
+- Complex data analysis and visualization in secure environments
+- Automated web interactions for form filling, data extraction, and multi-step processes
+- Large-scale data processing and monitoring
+- Secure code execution for AI agents in enterprise settings
+- Real-time web grounding for agents that need current information
+
 ## Tutorials Overview
 
 1. [Amazon Bedrock AgentCore Code Interpreter](01-Agent-Core-code-interpreter)
 2. [Amazon Bedrock AgentCore Browser Tool](02-Agent-Core-browser-tool)
+3. [Amazon Bedrock AgentCore Web Search Tool](03-Agent-Core-web-search)

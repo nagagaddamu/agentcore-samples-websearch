@@ -1,0 +1,7 @@
+boto3
+mcp
+requests
+langchain
+langchain-mcp-adapters
+langchain-aws
+langgraph
