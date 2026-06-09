@@ -9,6 +9,7 @@ This folder contains end-to-end applications that demonstrate how to apply Amazo
 * **[AWS Operations Agent](./AWS-operations-agent/)**: Intelligent AWS operations assistant with Okta authentication and comprehensive monitoring capabilities
 * **[Customer Support Assistant](./customer-support-assistant/)**: Production-ready customer service agent with memory, knowledge base integration, and Google OAuth
 * **[DB Performance Analyzer](./DB-performance-analyzer/)**: Database performance monitoring and analysis agent with PostgreSQL integration
+* **[Deep Research Agent](./deep-research-agent/)**: Iterative web research agent using AgentCore Web Search Tool with auto-provisioning Gateway setup and configurable search depth
 * **[Device Management Agent](./device-management-agent/)**: IoT device management system with Cognito authentication and real-time monitoring
 * **[Enterprise Web Intelligence Agent](./enterprise-web-intelligence-agent/)**: Web research and analysis agent using browser tools for competitive intelligence
 * **[Farm Management Advisor](./farm-management-advisor/)**: Agricultural advisory system with plant detection, weather forecasting, and care recommendations
