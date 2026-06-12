@@ -103,6 +103,7 @@ def get_oauth_token() -> str:
             "client_secret": cognito_client_secret,
             "scope": cognito_scope,
         },
+        timeout=10,
     )
     if resp.status_code != 200:
         error_detail = resp.text

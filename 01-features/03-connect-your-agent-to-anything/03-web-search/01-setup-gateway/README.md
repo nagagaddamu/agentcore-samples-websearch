@@ -4,7 +4,7 @@
 
 This script creates all the infrastructure needed to expose the Web Search Tool through an AgentCore Gateway. After running it, you'll have a fully functional MCP endpoint that any agent framework can connect to.
 
-> 🔒 **Search Privacy**: The Web Search Tool queries an AWS-maintained index built from open-source and licensed content providers. No queries are routed to third-party search engines or external providers.
+> 🔒 **Search Privacy**: The Web Search Tool queries an AWS-maintained search index. Queries do not route to any third-party search engines or external providers.
 
 ```
 ┌──────────────────┐         ┌─────────────────────────────────────┐

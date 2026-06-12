@@ -4,7 +4,7 @@
 
 This demo shows the same Web Search Tool integration using LangChain and LangGraph instead of Strands. It uses `langchain-mcp-adapters` to connect to the AgentCore Gateway and `create_react_agent` from LangGraph for the agent loop.
 
-> 🔒 **Search Privacy**: The Web Search Tool queries an AWS-maintained index built from open-source and licensed content providers. No queries are routed to third-party search engines or external providers.
+> 🔒 **Search Privacy**: The Web Search Tool queries an AWS-maintained search index. Queries do not route to any third-party search engines or external providers.
 ```
 ┌────────────┐  "Latest AWS announcements?"   ┌──────────────────────────┐
 │   User     │ ─────────────────────────────▶ │   LangChain Agent        │
