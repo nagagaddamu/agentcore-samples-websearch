@@ -34,7 +34,7 @@ The agent connects to the Gateway via MCP Streamable HTTP and calls `tools/list`
 When you ask a question:
 
 1. Strands sends the query + tool schema to Claude Sonnet 4
-2. Claude decides to call `WebSearch` with a concise search query
+2. Claude(the Strands Agent model) decides to call `WebSearch` with a concise search query
 3. Strands invokes the tool via MCP `tools/call` on the Gateway
 4. The Gateway routes to the Web Search connector and returns results
 5. Results are fed back to Claude as a tool result
