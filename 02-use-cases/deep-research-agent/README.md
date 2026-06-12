@@ -147,11 +147,17 @@ On first run without environment variables, the agent will:
 1. Scan your account for an existing Gateway with a Web Search target
 2. If found, reuse it automatically
 3. If not found, prompt you to create one (~60 seconds)
-4. Print `export` commands to skip this step on future runs
+4. Write credentials to `.env.web-search` for future runs
 
 ### 3. (Optional) Pre-configure environment variables
 
-If you already have a Gateway or want to skip auto-detection:
+If you already have a Gateway from a previous setup, source the credentials file:
+
+```bash
+source .env.web-search
+```
+
+Or set them manually:
 
 ```bash
 export AGENTCORE_GATEWAY_URL="https://..."

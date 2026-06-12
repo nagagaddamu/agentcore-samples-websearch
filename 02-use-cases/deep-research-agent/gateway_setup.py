@@ -80,20 +80,26 @@ class GatewayConfig:
         os.environ["AWS_DEFAULT_REGION"] = self.region
 
     def print_env_vars(self):
-        """Print export commands for the user to save."""
-        print("\n  To reuse this gateway in future sessions, export these variables:\n")
-        print(f'  export AGENTCORE_GATEWAY_URL="{self.gateway_url}"')
-        print(f'  export COGNITO_DOMAIN="{self.cognito_domain}"')
-        print(f'  export COGNITO_CLIENT_ID="{self.cognito_client_id}"')
-        print(f'  export COGNITO_CLIENT_SECRET="{self.cognito_client_secret}"')
-        print(f'  export COGNITO_SCOPE="{self.cognito_scope}"')
-        print(f'  export AWS_DEFAULT_REGION="{self.region}"')
+        """Write credentials to a local .env file and print non-sensitive info."""
+        env_file = ".env.web-search"
+        with open(env_file, "w") as f:
+            f.write(f'export AGENTCORE_GATEWAY_URL="{self.gateway_url}"\n')
+            f.write(f'export COGNITO_DOMAIN="{self.cognito_domain}"\n')
+            f.write(f'export COGNITO_CLIENT_ID="{self.cognito_client_id}"\n')
+            f.write(f'export COGNITO_CLIENT_SECRET="{self.cognito_client_secret}"\n')
+            f.write(f'export COGNITO_SCOPE="{self.cognito_scope}"\n')
+            f.write(f'export AWS_DEFAULT_REGION="{self.region}"\n')
+
+        print(f"\n  ✅ Credentials written to: {env_file}")
+        print(f"     Load them with: source {env_file}\n")
+        print(f"     Gateway URL:  {self.gateway_url}")
         if self.gateway_id:
-            print(f"\n  # Gateway ID (for cleanup): {self.gateway_id}")
+            print(f"     Gateway ID:   {self.gateway_id} (for cleanup)")
         if self.role_name:
-            print(f"  # IAM Role: {self.role_name}")
+            print(f"     IAM Role:     {self.role_name}")
         if self.user_pool_id:
-            print(f"  # Cognito Pool: {self.user_pool_id}")
+            print(f"     Cognito Pool: {self.user_pool_id}")
+        print(f"\n  ⚠️  Keep {env_file} secure — it contains your client secret.")
 
 
 # ── Detection: check env vars ─────────────────────────────────────────────────

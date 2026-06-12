@@ -108,13 +108,8 @@ pip install -r requirements.txt
 # Step 1: Create Gateway and Web Search target
 python 01-setup-gateway/setup_gateway.py
 
-# Step 2: Export the environment variables printed by setup
-export AGENTCORE_GATEWAY_URL="..."
-export COGNITO_DOMAIN="..."
-export COGNITO_CLIENT_ID="..."
-export COGNITO_CLIENT_SECRET="..."
-export COGNITO_SCOPE="agentcore-websearch/invoke"
-export AWS_DEFAULT_REGION="us-east-1"
+# Step 2: Load the credentials written by setup
+source .env.web-search
 
 # Optional: override the default Bedrock model
 export BEDROCK_MODEL_ID="us.anthropic.claude-3-5-sonnet-20241022-v2:0"
