@@ -63,7 +63,7 @@ The `create_mcp_client()` function handles OAuth token retrieval and transport c
 pip install -r ../requirements.txt
 ```
 
-Run `01-setup-gateway/setup_gateway.py` first and export the environment variables it prints.
+Run `01-setup-gateway/setup_gateway.py` first, then load credentials: `source .env.web-search`
 
 Requires access to Claude Sonnet 4 (`us.anthropic.claude-sonnet-4-6`) in us-east-1.
 

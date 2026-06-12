@@ -71,18 +71,26 @@ python setup_gateway.py --gateway-name my-web-search-gw
 python setup_gateway.py --region us-east-1
 ```
 
-After completion, the script prints environment variables to export:
+After completion, the script writes credentials to a local `.env.web-search` file:
 
 ```bash
-export AGENTCORE_GATEWAY_URL="https://..."
-export COGNITO_DOMAIN="..."
-export COGNITO_CLIENT_ID="..."
-export COGNITO_CLIENT_SECRET="..."
-export COGNITO_SCOPE="agentcore-websearch/invoke"
-export AWS_DEFAULT_REGION="us-east-1"
+source .env.web-search
 ```
 
-Export these before running the other demos.
+This loads the following variables into your shell:
+
+```bash
+AGENTCORE_GATEWAY_URL="https://..."
+COGNITO_DOMAIN="..."
+COGNITO_CLIENT_ID="..."
+COGNITO_CLIENT_SECRET="..."
+COGNITO_SCOPE="agentcore-websearch/invoke"
+AWS_DEFAULT_REGION="us-east-1"
+```
+
+Source this file before running the other demos.
+
+> **⚠️ Security**: The `.env.web-search` file contains your client secret. Keep it secure and do not commit it to version control (it's already in `.gitignore`).
 
 ## IAM Permissions
 

@@ -80,7 +80,8 @@ python 02-browser/01-nova-act/getting_started.py \
 # Web Search Tool
 pip install -r 03-web-search/requirements.txt
 python 03-web-search/01-setup-gateway/setup_gateway.py
-# Export the printed env vars, then:
+# Load the credentials written by setup:
+source .env.web-search
 python 03-web-search/03-strands-agent/web_search_strands.py
 ```
 

@@ -68,7 +68,7 @@ Calling the tool with a query returns structured results:
 pip install -r ../requirements.txt
 ```
 
-Run `01-setup-gateway/setup_gateway.py` first and export the environment variables it prints.
+Run `01-setup-gateway/setup_gateway.py` first, then load credentials: `source .env.web-search`
 
 ## Usage
 

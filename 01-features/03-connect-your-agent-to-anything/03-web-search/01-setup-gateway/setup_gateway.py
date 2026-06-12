@@ -7,7 +7,7 @@ Creates all required infrastructure for the Web Search Tool:
   3. AgentCore Gateway with MCP protocol and JWT authorization
   4. Web Search Tool connector target
 
-After running this script, export the printed environment variables to use
+After running this script, load credentials with `source .env.web-search` to use
 with the other demos in this folder.
 
 Prerequisites:
@@ -335,16 +335,25 @@ def main():
     print("\n" + "=" * 60)
     print("SETUP COMPLETE")
     print("=" * 60)
-    print("\nExport these environment variables to use with other demos:\n")
-    print(f"export AGENTCORE_GATEWAY_URL=\"{gateway_url}\"")
-    print(f"export COGNITO_DOMAIN=\"{cognito_config['domain']}\"")
-    print(f"export COGNITO_CLIENT_ID=\"{cognito_config['client_id']}\"")
-    print(f"export COGNITO_CLIENT_SECRET=\"{cognito_config['client_secret']}\"")
-    print(f"export COGNITO_SCOPE=\"{cognito_config['scope']}\"")
-    print(f"export AWS_DEFAULT_REGION=\"{region}\"")
-    print(f"\n# Gateway ID (for cleanup): {gateway_id}")
-    print(f"# IAM Role: {role_name}")
-    print(f"# Cognito Pool: {cognito_config['user_pool_id']}")
+
+    # Write credentials to a local .env file (avoids logging secrets to stdout)
+    env_file = ".env.web-search"
+    with open(env_file, "w") as f:
+        f.write(f"export AGENTCORE_GATEWAY_URL=\"{gateway_url}\"\n")
+        f.write(f"export COGNITO_DOMAIN=\"{cognito_config['domain']}\"\n")
+        f.write(f"export COGNITO_CLIENT_ID=\"{cognito_config['client_id']}\"\n")
+        f.write(f"export COGNITO_CLIENT_SECRET=\"{cognito_config['client_secret']}\"\n")  # noqa: E501
+        f.write(f"export COGNITO_SCOPE=\"{cognito_config['scope']}\"\n")
+        f.write(f"export AWS_DEFAULT_REGION=\"{region}\"\n")
+
+    print(f"\n✅ Credentials written to: {env_file}")
+    print("   Load them with: source .env.web-search\n")
+    print(f"   Gateway URL:  {gateway_url}")
+    print(f"   Gateway ID:   {gateway_id} (for cleanup)")
+    print(f"   IAM Role:     {role_name}")
+    print(f"   Cognito Pool: {cognito_config['user_pool_id']}")
+    print(f"\n⚠️  Keep {env_file} secure — it contains your client secret.")
+    print(f"   Add it to .gitignore to avoid committing it.")
 
 
 if __name__ == "__main__":
