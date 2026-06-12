@@ -69,6 +69,7 @@ def get_oauth_token(
             "client_secret": client_secret,
             "scope": scope,
         },
+        timeout=10,
     )
     response.raise_for_status()
     return response.json()["access_token"]
