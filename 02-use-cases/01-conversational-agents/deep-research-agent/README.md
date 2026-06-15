@@ -37,7 +37,7 @@ Single-shot web search works for simple factual queries. For questions that requ
 - "What are the current best practices for deploying LLM agents in production, based on recent industry reports?"
 - "What are the trade-offs between RAG and fine-tuning for enterprise LLM applications?"
 
-## Architecture
+## Use Case Architecture
 
 ![Deep Research Agent with Amazon Bedrock AgentCore](images/deep-research-agent-architecture.png)
 
@@ -151,16 +151,25 @@ When deployed, invoke via the AgentCore Runtime API:
 
 ## Cleanup
 
-When you're done, remove all provisioned resources using the shared cleanup script:
+When you're done, remove all provisioned resources:
 
 ```bash
-python ../../../01-features/03-connect-your-agent-to-anything/03-web-search/05-cleanup/cleanup.py \
-  --gateway-id <gateway-id> \
-  --user-pool-id <user-pool-id> \
-  --role-name <role-name>
+python cleanup.py --gateway-id <gateway-id> --user-pool-id <user-pool-id> --role-name <role-name>
 ```
 
-The gateway ID, role name, and user pool ID are printed during provisioning. After cleanup, unset environment variables:
+| Parameter | Required | Description |
+|:----------|:---------|:------------|
+| `--gateway-id` | Yes | Gateway ID (printed during provisioning) |
+| `--user-pool-id` | Yes | Cognito User Pool ID (printed during provisioning) |
+| `--role-name` | Yes | IAM role name (printed during provisioning) |
+
+The cleanup script will:
+- Delete the Gateway and all its targets
+- Delete the Cognito User Pool and domain
+- Delete the IAM service role and inline policies
+- Remove the local `.env.web-search` credentials file
+
+After cleanup, unset environment variables:
 
 ```bash
 unset AGENTCORE_GATEWAY_URL COGNITO_DOMAIN COGNITO_CLIENT_ID COGNITO_CLIENT_SECRET COGNITO_SCOPE
@@ -192,6 +201,7 @@ See the Prerequisites section above for the full list of permissions needed to c
 |:-----|:------------|
 | `deep_research_agent.py` | Main agent — Plan/Search/Reflect loop, AgentCore Runtime entrypoint, and CLI |
 | `gateway_setup.py` | Auto-detection and provisioning of Gateway + Web Search infrastructure |
+| `cleanup.py` | Deletes all provisioned AWS resources and local credentials |
 | `requirements.txt` | Python dependencies |
 | `README.md` | This file |
 
