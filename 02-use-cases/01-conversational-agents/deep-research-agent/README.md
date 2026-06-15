@@ -6,30 +6,7 @@ An intelligent research agent powered by Amazon Bedrock AgentCore and Claude Son
 
 Single-shot web search works for simple factual queries. For questions that require comparing multiple sources, reconciling conflicting information, or drilling into details revealed by earlier results, you need a reflect-and-refine loop. The Deep Research Agent makes that loop explicit and configurable.
 
-```
-Question
-   │
-   ▼
-┌──────────────────────────────────────────┐
-│  PLAN: Break into prioritised            │
-│  sub-questions                           │
-└──────────────┬───────────────────────────┘
-               │
-               ▼
-┌──────────────────────────────────────────┐
-│  SEARCH: Execute highest-priority query  │◀──┐
-└──────────────┬───────────────────────────┘   │
-               │                               │
-               ▼                               │
-┌──────────────────────────────────────────┐   │
-│  REFLECT: What gaps remain?              │   │
-│  → Gaps found: refine query, repeat ─────┼───┘
-│  → Confident: synthesize                │
-└──────────────┬───────────────────────────┘
-               │
-               ▼
-   Comprehensive answer with citations
-```
+![Deep Research Agent-Iterative Research Loop](images/deep-research-loop-diagram.png)
 
 | Information | Details |
 |:------------|:--------|
@@ -62,22 +39,7 @@ Question
 
 ## Architecture
 
-```
-┌─────────────┐  Research question   ┌──────────────────────────────────┐
-│   User /    │ ───────────────────▶ │  Deep Research Agent             │
-│  Client     │                      │  (Claude Sonnet 4 via Strands)   │
-│             │◀─────────────────── │                                  │
-│             │  Cited research      │  Plan → Search → Reflect loop    │
-└─────────────┘  report              │       │                          │
-                                     └───────┼──────────────────────────┘
-                                             │ MCP tools/call
-                                             ▼
-                                     ┌──────────────────────────────────┐
-                                     │  AgentCore Gateway               │
-                                     │  → Web Search Connector          │
-                                     │  → Real-time web results         │
-                                     └──────────────────────────────────┘
-```
+![Deep Research Agent with Amazon Bedrock AgentCore](images/deep-research-agent-architecture.png)
 
 ## Features
 
@@ -126,7 +88,7 @@ On subsequent runs, if you export the printed variables, only `bedrock:InvokeMod
 ### 1. Install dependencies
 
 ```bash
-cd 02-use-cases/deep-research-agent
+cd 02-use-cases/01-conversational-agents/deep-research-agent
 pip install -r requirements.txt
 ```
 
@@ -192,7 +154,7 @@ When deployed, invoke via the AgentCore Runtime API:
 When you're done, remove all provisioned resources using the shared cleanup script:
 
 ```bash
-python ../../01-features/03-connect-your-agent-to-anything/03-web-search/05-cleanup/cleanup.py \
+python ../../../01-features/03-connect-your-agent-to-anything/03-web-search/05-cleanup/cleanup.py \
   --gateway-id <gateway-id> \
   --user-pool-id <user-pool-id> \
   --role-name <role-name>
@@ -259,6 +221,5 @@ deep_research_agent.py
 
 ## Related Resources
 
-- [`01-features/03-connect-your-agent-to-anything/03-web-search/`](../../01-features/03-connect-your-agent-to-anything/03-web-search/) — Gateway setup, raw MCP, and basic agent demos
-- [`06-workshops/05-AgentCore-tools/03-Agent-Core-web-search/04-advanced-examples/03-iterative-research/`](../../06-workshops/05-AgentCore-tools/03-Agent-Core-web-search/04-advanced-examples/03-iterative-research/) — Jupyter Notebook version of this pattern (workshop format)
+- [`01-features/03-connect-your-agent-to-anything/03-web-search/`](../../../01-features/03-connect-your-agent-to-anything/03-web-search/) — Gateway setup, raw MCP, and basic agent demos
 - [AgentCore Gateway documentation](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html)

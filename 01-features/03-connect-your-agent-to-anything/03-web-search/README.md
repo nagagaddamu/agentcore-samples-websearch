@@ -14,18 +14,7 @@
 
 The Web Search Tool uses the **connector** target type — a fully AWS-managed integration that requires no schema, no endpoint configuration, and no outbound credential setup. You specify `connectorId: "web-search"` and the Gateway handles everything else.
 
-```
-┌─────────────┐   OAuth Token    ┌──────────────────────────────────┐
-│  Your Agent │ ───────────────▶ │  AgentCore Gateway (MCP)         │
-│  (Strands,  │                  │                                  │
-│  LangChain, │   tools/list     │  ┌────────────────────────────┐  │
-│  or any MCP │ ───────────────▶ │  │  Web Search Connector      │  │
-│  client)    │                  │  │  connectorId: "web-search"  │  │
-│             │   tools/call     │  │                            │  │
-│             │ ───────────────▶ │  │  → Real-time web results   │  │
-│             │◀─────────────── │  └────────────────────────────┘  │
-└─────────────┘   results        └──────────────────────────────────┘
-```
+![Web search with Amazon Bedrock AgentCore Gateway](images/agentcore-web-search-architecture.png)
 
 ### Key Capabilities
 

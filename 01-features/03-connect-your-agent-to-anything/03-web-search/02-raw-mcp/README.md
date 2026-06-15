@@ -6,15 +6,7 @@ This demo calls the AgentCore Gateway directly over the MCP protocol — no agen
 
 > 🔒 **Search Privacy**: The Web Search Tool queries an AWS-maintained search index. Queries do not route to any third-party search engines or external providers.
 
-```
-┌──────────────────┐   tools/list    ┌─────────────────────────────────┐
-│  raw_mcp_call.py │ ──────────────▶ │  AgentCore Gateway              │
-│                  │                  │                                 │
-│  MCPClient       │   tools/call    │  Target: web-search (connector) │
-│  (Streamable     │ ──────────────▶ │                                 │
-│   HTTP)          │◀────────────── │  → WebSearch results             │
-└──────────────────┘   results       └─────────────────────────────────┘
-```
+![Raw MCP Client web search Architecture](images/raw-mcp-call-architecture.png)
 
 ## How It Works
 

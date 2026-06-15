@@ -6,22 +6,8 @@ This demo shows the complete agent integration: a Strands agent automatically di
 
 > 🔒 **Search Privacy**: The Web Search Tool queries an AWS-maintained search index. Queries do not route to any third-party search engines or external providers.
 
-```
-┌────────────┐  "What's the latest AI news?"  ┌──────────────────────────┐
-│   User     │ ─────────────────────────────▶ │   Strands Agent          │
-│            │◀───────────────────────────── │   (Claude Sonnet 4)      │
-│            │  "Here's what I found: [...]"  │                          │
-└────────────┘                                 │  tools: [WebSearch]      │
-                                               │       │                  │
-                                               └───────┼──────────────────┘
-                                                       │ MCP tools/call
-                                                       ▼
-                                               ┌──────────────────────────┐
-                                               │  AgentCore Gateway       │
-                                               │  → Web Search Connector  │
-                                               │  → Structured results    │
-                                               └──────────────────────────┘
-```
+
+![Strands Agent web search Architecture](images/strands-web-search-architecture.png)
 
 ## How It Works
 
