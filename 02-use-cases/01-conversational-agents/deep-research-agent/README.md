@@ -130,7 +130,7 @@ export COGNITO_SCOPE="agentcore-websearch/invoke"
 export AWS_DEFAULT_REGION="us-east-1"
 ```
 
-### 4. Deploy to AgentCore Runtime
+### 4. (Optional) Deploy to AgentCore Runtime
 
 For runtime deployments, environment variables **must** be pre-configured in the
 container environment (no interactive provisioning in runtime mode):

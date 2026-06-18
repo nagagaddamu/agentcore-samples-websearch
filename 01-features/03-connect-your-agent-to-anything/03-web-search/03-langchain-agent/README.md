@@ -21,8 +21,8 @@ pip install -r ../requirements.txt
 
 ```bash
 # 1. Set up the Gateway (creates IAM role, Cognito, Gateway, Web Search target)
-python setup_gateway.py
-#python setup_gateway.py --gateway-name my-web-search-gw
+#python setup_gateway.py
+python setup_gateway.py --gateway-name langchain-web-search-gw
 
 # 2. Load credentials into your shell
 source .env.web-search

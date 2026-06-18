@@ -77,6 +77,7 @@ Calling the tool with a query returns structured results:
 ```bash
 # Install dependencies
 pip install -r ../requirements.txt
+#python3 -m pip install --upgrade --force-reinstall boto3
 
 # Set up the Gateway (creates IAM role, Cognito, Gateway, Web Search target)
 python setup_gateway.py

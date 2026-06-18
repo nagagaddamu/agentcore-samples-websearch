@@ -33,7 +33,9 @@ Usage:
 import argparse
 import json
 import os
+import sys
 import time
+
 
 import boto3
 
@@ -347,6 +349,10 @@ def main():
         f.write(f"export COGNITO_CLIENT_SECRET=\"{cognito_config['client_secret']}\"\n")  # noqa: E501
         f.write(f"export COGNITO_SCOPE=\"{cognito_config['scope']}\"\n")
         f.write(f"export AWS_DEFAULT_REGION=\"{region}\"\n")
+        f.write(f'export GATEWAY_ID="{gateway_id}"\n')
+        f.write(f'export USER_POOL_ID="{cognito_config["user_pool_id"]}"\n')
+        f.write(f'export ROLE_NAME="{role_name}"\n')
+        f.write(f'# Cleanup resource IDs\n')
 
     print(f"\n✅ Credentials written to: {env_file}")
     print("   Load them with: source .env.web-search\n")

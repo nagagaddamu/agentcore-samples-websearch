@@ -41,7 +41,7 @@ from utils.gateway_auth import get_oauth_token
 
 from langchain_aws import ChatBedrockConverse
 from langchain_mcp_adapters.client import MultiServerMCPClient
-from langgraph.prebuilt import create_react_agent  # noqa: E402 — stable in langgraph>=1.0
+from langchain.agents import create_agent
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
@@ -84,7 +84,8 @@ async def run_agent(query: str):
     print(f"  Discovered {len(tools)} tool(s)")
 
     # Create and run the agent
-    agent = create_react_agent(model, tools=tools)
+    #agent = create_react_agent(model, tools=tools)
+    agent = create_agent(model, tools=tools)
     result = await agent.ainvoke(
         {"messages": [{"role": "user", "content": query}]}
     )
