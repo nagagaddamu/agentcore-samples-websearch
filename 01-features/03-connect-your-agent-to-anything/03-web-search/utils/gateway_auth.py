@@ -82,7 +82,7 @@ def create_streamable_http_transport(gateway_url: str = "", **token_kwargs):
     """Create an MCP Streamable HTTP transport authenticated with a Bearer token.
 
     Args:
-        gateway_url: The AgentCore Gateway MCP endpoint URL.
+        gateway_url: The AgentCore gateway MCP endpoint URL.
         **token_kwargs: Passed to get_oauth_token() for credential overrides.
 
     Returns:

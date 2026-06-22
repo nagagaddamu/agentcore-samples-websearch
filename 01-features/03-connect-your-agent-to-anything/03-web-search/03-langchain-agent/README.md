@@ -2,7 +2,7 @@
 
 ## Overview
 
-This demo shows the same Web Search Tool integration using LangChain and LangGraph instead of Strands. It uses `langchain-mcp-adapters` to connect to the AgentCore Gateway and `create_react_agent` from LangGraph for the agent loop.
+This demo shows the same Web Search Tool integration using LangChain and LangGraph instead of Strands. It uses `langchain-mcp-adapters` to connect to the AgentCore gateway and `create_react_agent` from LangGraph for the agent loop.
 
 ![Langchain web search Architecture](images/langchain-web-search-architecture.png)
 
@@ -10,7 +10,7 @@ This demo shows the same Web Search Tool integration using LangChain and LangGra
 
 - Python 3.10+
 - AWS account with Amazon Bedrock enabled in **us-east-1**
-- AWS credentials with IAM, Cognito, and AgentCore Gateway permissions
+- AWS credentials with IAM, Cognito, and AgentCore gateway permissions
 - Claude Sonnet 4 model access enabled in Bedrock
 
 ```bash

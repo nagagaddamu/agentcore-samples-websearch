@@ -68,7 +68,7 @@ def run_query(agent, query: str):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Strands agent with Web Search Tool via AgentCore Gateway"
+        description="Strands agent with Web Search Tool via AgentCore gateway"
     )
     parser.add_argument(
         "--query",
@@ -82,7 +82,7 @@ def main():
     args = parse_args()
 
     print("=" * 60)
-    print("AgentCore Web Search Tool — Strands Agent")
+    print("AgentCore web search tool — Strands Agent")
     print("=" * 60)
 
     mcp_client = create_mcp_client()

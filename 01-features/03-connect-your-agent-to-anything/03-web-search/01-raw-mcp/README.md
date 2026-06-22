@@ -2,7 +2,7 @@
 
 ## Overview
 
-This example calls the AgentCore Gateway directly over the MCP protocol — no agent framework involved. It's the simplest way to verify your Gateway and Web Search Tool target are working correctly.
+This example calls the AgentCore gateway directly over the MCP protocol — no agent framework involved. It's the simplest way to verify your Gateway and Web Search Tool target are working correctly.
 
 > 🔒 **Search Privacy**: The Web Search Tool queries an AWS-maintained search index. Queries do not route to any third-party search engines or external providers.
 
@@ -12,7 +12,7 @@ This example calls the AgentCore Gateway directly over the MCP protocol — no a
 
 - Python 3.10+
 - AWS account with Amazon Bedrock enabled in **us-east-1**
-- AWS credentials with IAM, Cognito, and AgentCore Gateway permissions
+- AWS credentials with IAM, Cognito, and AgentCore gateway permissions
 
 ## How It Works
 

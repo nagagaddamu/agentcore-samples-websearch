@@ -1,10 +1,10 @@
 """
-Shared Strands agent using AgentCore Web Search Tool via Gateway.
+Shared Strands agent using AgentCore web search tool via Gateway.
 
 Used as the common demo agent across web search sub-demos:
   - 03-strands-agent/web_search_strands.py
 
-The agent connects to an AgentCore Gateway that exposes the Web Search Tool
+The agent connects to an AgentCore gateway that exposes the Web Search Tool
 as an MCP-compliant connector target. Tools are discovered dynamically via
 the MCP tools/list endpoint.
 
@@ -52,7 +52,7 @@ RESPONSE FORMAT:
 
 
 def create_mcp_client(gateway_url: str = "", **token_kwargs) -> MCPClient:
-    """Create an MCPClient connected to the AgentCore Gateway.
+    """Create an MCPClient connected to the AgentCore gateway.
 
     Args:
         gateway_url: The Gateway MCP endpoint URL.
