@@ -82,6 +82,7 @@ class GatewayConfig:
     def print_env_vars(self):
         """Write credentials to a local .env file and print non-sensitive info."""
         env_file = ".env.web-search"
+        # START nosec - intentional for local development workflow
         with open(env_file, "w") as f:
             f.write(f'export AGENTCORE_GATEWAY_URL="{self.gateway_url}"\n')
             f.write(f'export COGNITO_DOMAIN="{self.cognito_domain}"\n')
@@ -89,7 +90,7 @@ class GatewayConfig:
             f.write(f'export COGNITO_CLIENT_SECRET="{self.cognito_client_secret}"\n')
             f.write(f'export COGNITO_SCOPE="{self.cognito_scope}"\n')
             f.write(f'export AWS_DEFAULT_REGION="{self.region}"\n')
-
+        # END nosec - intentional for local development workflow
         print(f"\n  ✅ Credentials written to: {env_file}")
         print(f"     Load them with: source {env_file}\n")
         print(f"     Gateway URL:  {self.gateway_url}")
