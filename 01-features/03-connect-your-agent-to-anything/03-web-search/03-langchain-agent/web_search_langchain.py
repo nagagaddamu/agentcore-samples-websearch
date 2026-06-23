@@ -1,8 +1,7 @@
 """
 Web Search with a LangChain Agent.
 
-Demonstrates a LangChain agent that uses the Web Search Tool via AgentCore
-Gateway to answer real-time questions:
+Demonstrates a LangChain agent that uses the Web Search Tool via AgentCore gateway to answer real-time questions:
   1. Connect to the Gateway using langchain-mcp-adapters MultiServerMCPClient
   2. Discover tools from the Gateway
   3. Create a LangChain agent with ChatBedrockConverse
