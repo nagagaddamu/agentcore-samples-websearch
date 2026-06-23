@@ -341,7 +341,7 @@ def main():
     # Write credentials to a local .env file next to the script that invoked setup
     caller_dir = os.path.dirname(os.path.abspath(sys.argv[0])) if sys.argv[0] else os.getcwd()
     env_file = os.path.join(caller_dir, ".env.web-search")
-
+    # START nosec - intentional for local development workflow
     with open(env_file, "w") as f:
         f.write(f"export AGENTCORE_GATEWAY_URL=\"{gateway_url}\"\n")
         f.write(f"export COGNITO_DOMAIN=\"{cognito_config['domain']}\"\n")
@@ -352,7 +352,8 @@ def main():
         f.write(f'export GATEWAY_ID="{gateway_id}"\n')
         f.write(f'export USER_POOL_ID="{cognito_config["user_pool_id"]}"\n')
         f.write(f'export ROLE_NAME="{role_name}"\n')
-        f.write(f'# Cleanup resource IDs\n')
+        f.write('# Cleanup resource IDs\n')
+    #END nosec - intentional for local development workflow
 
     print(f"\n✅ Credentials written to: {env_file}")
     print("   Load them with: source .env.web-search\n")
@@ -361,7 +362,7 @@ def main():
     print(f"   IAM Role:     {role_name}")
     print(f"   Cognito Pool: {cognito_config['user_pool_id']}")
     print(f"\n⚠️  Keep {env_file} secure — it contains your client secret.")
-    print(f"   Add it to .gitignore to avoid committing it.")
+    print("   Add it to .gitignore to avoid committing it.")
 
 
 if __name__ == "__main__":
