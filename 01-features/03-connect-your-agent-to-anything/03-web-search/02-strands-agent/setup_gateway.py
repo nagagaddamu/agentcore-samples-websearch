@@ -7,6 +7,7 @@ Usage:
     python setup_gateway.py --gateway-name my-gateway
     python setup_gateway.py --region us-east-1
 """
+
 import sys
 import os
 

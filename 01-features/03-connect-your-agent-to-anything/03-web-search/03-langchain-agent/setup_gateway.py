@@ -1,10 +1,11 @@
 """Set up AgentCore gateway with Web Search Tool — delegates to shared utility.
-    
-    Usage:
-    python setup_gateway.py
-    python setup_gateway.py --gateway-name my-gateway
-    python setup_gateway.py --region us-east-1
+
+Usage:
+python setup_gateway.py
+python setup_gateway.py --gateway-name my-gateway
+python setup_gateway.py --region us-east-1
 """
+
 import sys
 import os
 

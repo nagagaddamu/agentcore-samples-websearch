@@ -48,9 +48,7 @@ DEFAULT_QUERY = "Tesla stock price right now?"
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Raw MCP tool discovery and invocation against AgentCore gateway"
-    )
+    parser = argparse.ArgumentParser(description="Raw MCP tool discovery and invocation against AgentCore gateway")
     parser.add_argument(
         "--query",
         default=DEFAULT_QUERY,
@@ -99,9 +97,7 @@ def main():
             return
 
         ws_tool_name = ws_tools[0].tool_name
-        result = mcp_client.call_tool_sync(
-            "raw-mcp-demo", ws_tool_name, {"query": args.query}
-        )
+        result = mcp_client.call_tool_sync("raw-mcp-demo", ws_tool_name, {"query": args.query})
 
         # Step 3: Display results
         print("[3] Results:\n")

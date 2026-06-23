@@ -90,9 +90,7 @@ def create_streamable_http_transport(gateway_url: str = "", **token_kwargs):
     """
     gateway_url = gateway_url or GATEWAY_URL
     if not gateway_url:
-        raise ValueError(
-            "Gateway URL not configured. Set AGENTCORE_GATEWAY_URL environment variable."
-        )
+        raise ValueError("Gateway URL not configured. Set AGENTCORE_GATEWAY_URL environment variable.")
 
     token = get_oauth_token(**token_kwargs)
 

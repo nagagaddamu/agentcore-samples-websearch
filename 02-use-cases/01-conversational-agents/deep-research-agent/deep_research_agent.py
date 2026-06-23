@@ -63,9 +63,7 @@ from gateway_setup import ensure_gateway
 # ── Configuration ──────────────────────────────────────────────────────────────
 
 REGION = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
-MODEL_ID = os.getenv(
-    "BEDROCK_MODEL_ID", "us.anthropic.claude-sonnet-4-6"
-)
+MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "us.anthropic.claude-sonnet-4-6")
 MAX_SEARCH_ITERATIONS = int(os.getenv("DEEP_RESEARCH_MAX_ITER", "4"))
 
 # Configure logging
@@ -284,8 +282,7 @@ def deep_research_runtime(payload):
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
-            "Deep Research Agent — iterative Plan/Search/Reflect/Synthesize "
-            "loop via AgentCore Gateway Web Search Tool"
+            "Deep Research Agent — iterative Plan/Search/Reflect/Synthesize loop via AgentCore Gateway Web Search Tool"
         )
     )
     parser.add_argument(
