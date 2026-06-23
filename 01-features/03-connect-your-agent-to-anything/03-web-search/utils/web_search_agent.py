@@ -27,10 +27,7 @@ from utils.gateway_auth import create_streamable_http_transport
 # ── Configuration ─────────────────────────────────────────────────────────────
 
 REGION = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
-MODEL_ID = os.getenv(
-    "BEDROCK_MODEL_ID", "global.anthropic.claude-sonnet-4-6"
-    
-)
+MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "global.anthropic.claude-sonnet-4-6")
 
 SYSTEM_PROMPT = """You are a helpful research assistant with access to real-time web search.
 
@@ -61,9 +58,7 @@ def create_mcp_client(gateway_url: str = "", **token_kwargs) -> MCPClient:
     Returns:
         MCPClient instance (must be used as a context manager).
     """
-    transport_factory = create_streamable_http_transport(
-        gateway_url=gateway_url, **token_kwargs
-    )
+    transport_factory = create_streamable_http_transport(gateway_url=gateway_url, **token_kwargs)
     return MCPClient(transport_factory)
 
 

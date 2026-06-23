@@ -29,13 +29,9 @@ def delete_gateway(gateway_client, gateway_id):
     """Delete all targets and the gateway itself."""
     print("\n[1/3] Deleting Gateway resources...")
     try:
-        targets = gateway_client.list_gateway_targets(
-            gatewayIdentifier=gateway_id, maxResults=100
-        )
+        targets = gateway_client.list_gateway_targets(gatewayIdentifier=gateway_id, maxResults=100)
         for item in targets["items"]:
-            gateway_client.delete_gateway_target(
-                gatewayIdentifier=gateway_id, targetId=item["targetId"]
-            )
+            gateway_client.delete_gateway_target(gatewayIdentifier=gateway_id, targetId=item["targetId"])
             print(f"  Deleted target: {item['name']}")
 
         time.sleep(10)
@@ -50,9 +46,7 @@ def delete_cognito(cognito_client, user_pool_id):
     print("\n[2/3] Deleting Cognito resources...")
     try:
         domain = user_pool_id.replace("_", "").lower()
-        cognito_client.delete_user_pool_domain(
-            Domain=domain, UserPoolId=user_pool_id
-        )
+        cognito_client.delete_user_pool_domain(Domain=domain, UserPoolId=user_pool_id)
         cognito_client.delete_user_pool(UserPoolId=user_pool_id)
         print(f"  Deleted user pool: {user_pool_id}")
     except Exception as e:
@@ -65,9 +59,7 @@ def delete_iam_role(iam_client, role_name):
     try:
         policies = iam_client.list_role_policies(RoleName=role_name)
         for policy_name in policies["PolicyNames"]:
-            iam_client.delete_role_policy(
-                RoleName=role_name, PolicyName=policy_name
-            )
+            iam_client.delete_role_policy(RoleName=role_name, PolicyName=policy_name)
             print(f"  Deleted policy: {policy_name}")
 
         iam_client.delete_role(RoleName=role_name)
@@ -85,21 +77,11 @@ def delete_env_file():
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Clean up Deep Research Agent Gateway resources"
-    )
-    parser.add_argument(
-        "--gateway-id", required=True, help="Gateway ID to delete"
-    )
-    parser.add_argument(
-        "--user-pool-id", required=True, help="Cognito User Pool ID to delete"
-    )
-    parser.add_argument(
-        "--role-name", required=True, help="IAM role name to delete"
-    )
-    parser.add_argument(
-        "--region", default=REGION, help="AWS region (default: us-east-1)"
-    )
+    parser = argparse.ArgumentParser(description="Clean up Deep Research Agent Gateway resources")
+    parser.add_argument("--gateway-id", required=True, help="Gateway ID to delete")
+    parser.add_argument("--user-pool-id", required=True, help="Cognito User Pool ID to delete")
+    parser.add_argument("--role-name", required=True, help="IAM role name to delete")
+    parser.add_argument("--region", default=REGION, help="AWS region (default: us-east-1)")
     return parser.parse_args()
 
 

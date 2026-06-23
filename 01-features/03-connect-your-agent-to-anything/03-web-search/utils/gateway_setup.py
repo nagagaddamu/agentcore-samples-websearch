@@ -81,9 +81,7 @@ def create_gateway_role(iam_client, role_name, account_id, region):
                 "Action": "sts:AssumeRole",
                 "Condition": {
                     "StringEquals": {"aws:SourceAccount": account_id},
-                    "ArnLike": {
-                        "aws:SourceArn": f"arn:aws:bedrock-agentcore:{region}:{account_id}:*"
-                    },
+                    "ArnLike": {"aws:SourceArn": f"arn:aws:bedrock-agentcore:{region}:{account_id}:*"},
                 },
             }
         ],
@@ -148,18 +146,14 @@ def create_cognito_resources(cognito_client, region):
         create_resp = cognito_client.create_user_pool(PoolName=pool_name)
         user_pool_id = create_resp["UserPool"]["Id"]
         domain = user_pool_id.replace("_", "").lower()
-        cognito_client.create_user_pool_domain(
-            Domain=domain, UserPoolId=user_pool_id
-        )
+        cognito_client.create_user_pool_domain(Domain=domain, UserPoolId=user_pool_id)
         print(f"  Created user pool: {user_pool_id}")
     else:
         print(f"  User pool exists: {user_pool_id}")
 
     # Create resource server
     try:
-        cognito_client.describe_resource_server(
-            UserPoolId=user_pool_id, Identifier=resource_server_id
-        )
+        cognito_client.describe_resource_server(UserPoolId=user_pool_id, Identifier=resource_server_id)
     except cognito_client.exceptions.ResourceNotFoundException:
         cognito_client.create_resource_server(
             UserPoolId=user_pool_id,
@@ -171,13 +165,9 @@ def create_cognito_resources(cognito_client, region):
 
     # Find or create M2M client
     client_id, client_secret = None, None
-    for client in cognito_client.list_user_pool_clients(
-        UserPoolId=user_pool_id, MaxResults=60
-    )["UserPoolClients"]:
+    for client in cognito_client.list_user_pool_clients(UserPoolId=user_pool_id, MaxResults=60)["UserPoolClients"]:
         if client["ClientName"] == "agentcore-websearch-client":
-            desc = cognito_client.describe_user_pool_client(
-                UserPoolId=user_pool_id, ClientId=client["ClientId"]
-            )
+            desc = cognito_client.describe_user_pool_client(UserPoolId=user_pool_id, ClientId=client["ClientId"])
             client_id = client["ClientId"]
             client_secret = desc["UserPoolClient"]["ClientSecret"]
             break
@@ -200,10 +190,7 @@ def create_cognito_resources(cognito_client, region):
         print(f"  Client exists: {client_id}")
 
     domain = user_pool_id.replace("_", "").lower()
-    discovery_url = (
-        f"https://cognito-idp.{region}.amazonaws.com/{user_pool_id}"
-        f"/.well-known/openid-configuration"
-    )
+    discovery_url = f"https://cognito-idp.{region}.amazonaws.com/{user_pool_id}/.well-known/openid-configuration"
     scope_string = " ".join(scope_names)
 
     return {
@@ -222,9 +209,7 @@ def create_gateway(gateway_client, name, role_arn, cognito_config):
         name=name,
         roleArn=role_arn,
         protocolType="MCP",
-        protocolConfiguration={
-            "mcp": {"supportedVersions": ["2025-03-26"], "searchType": "SEMANTIC"}
-        },
+        protocolConfiguration={"mcp": {"supportedVersions": ["2025-03-26"], "searchType": "SEMANTIC"}},
         authorizerType="CUSTOM_JWT",
         authorizerConfiguration={
             "customJWTAuthorizer": {
@@ -255,15 +240,11 @@ def create_web_search_target(gateway_client, gateway_id):
             "mcp": {
                 "connector": {
                     "source": {"connectorId": "web-search"},
-                    "configurations": [
-                        {"name": "WebSearch", "parameterValues": {}}
-                    ],
+                    "configurations": [{"name": "WebSearch", "parameterValues": {}}],
                 }
             }
         },
-        credentialProviderConfigurations=[
-            {"credentialProviderType": "GATEWAY_IAM_ROLE"}
-        ],
+        credentialProviderConfigurations=[{"credentialProviderType": "GATEWAY_IAM_ROLE"}],
     )
 
     target_id = target_response["targetId"]
@@ -281,9 +262,7 @@ def create_web_search_target(gateway_client, gateway_id):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Set up AgentCore gateway with Web Search Tool target"
-    )
+    parser = argparse.ArgumentParser(description="Set up AgentCore gateway with Web Search Tool target")
     parser.add_argument(
         "--gateway-name",
         default="web-search-gateway",
@@ -325,9 +304,7 @@ def main():
     # Step 3: Gateway
     print("\n[3/4] Creating AgentCore gateway...")
     gateway_client = boto3.client("bedrock-agentcore-control", region_name=region)
-    gateway_id, gateway_url = create_gateway(
-        gateway_client, args.gateway_name, role_arn, cognito_config
-    )
+    gateway_id, gateway_url = create_gateway(gateway_client, args.gateway_name, role_arn, cognito_config)
 
     # Step 4: Web Search Target
     print("\n[4/4] Creating Web Search Tool target...")
@@ -343,17 +320,17 @@ def main():
     env_file = os.path.join(caller_dir, ".env.web-search")
     # START nosec - intentional for local development workflow
     with open(env_file, "w") as f:
-        f.write(f"export AGENTCORE_GATEWAY_URL=\"{gateway_url}\"\n")
-        f.write(f"export COGNITO_DOMAIN=\"{cognito_config['domain']}\"\n")
-        f.write(f"export COGNITO_CLIENT_ID=\"{cognito_config['client_id']}\"\n")
-        f.write(f"export COGNITO_CLIENT_SECRET=\"{cognito_config['client_secret']}\"\n")  # noqa: E501
-        f.write(f"export COGNITO_SCOPE=\"{cognito_config['scope']}\"\n")
-        f.write(f"export AWS_DEFAULT_REGION=\"{region}\"\n")
+        f.write(f'export AGENTCORE_GATEWAY_URL="{gateway_url}"\n')
+        f.write(f'export COGNITO_DOMAIN="{cognito_config["domain"]}"\n')
+        f.write(f'export COGNITO_CLIENT_ID="{cognito_config["client_id"]}"\n')
+        f.write(f'export COGNITO_CLIENT_SECRET="{cognito_config["client_secret"]}"\n')  # noqa: E501
+        f.write(f'export COGNITO_SCOPE="{cognito_config["scope"]}"\n')
+        f.write(f'export AWS_DEFAULT_REGION="{region}"\n')
         f.write(f'export GATEWAY_ID="{gateway_id}"\n')
         f.write(f'export USER_POOL_ID="{cognito_config["user_pool_id"]}"\n')
         f.write(f'export ROLE_NAME="{role_name}"\n')
-        f.write('# Cleanup resource IDs\n')
-    #END nosec - intentional for local development workflow
+        f.write("# Cleanup resource IDs\n")
+    # END nosec - intentional for local development workflow
 
     print(f"\n✅ Credentials written to: {env_file}")
     print("   Load them with: source .env.web-search\n")

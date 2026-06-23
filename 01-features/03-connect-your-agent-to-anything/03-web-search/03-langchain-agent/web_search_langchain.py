@@ -46,9 +46,7 @@ from langchain.agents import create_agent
 # ── Configuration ─────────────────────────────────────────────────────────────
 
 REGION = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
-MODEL_ID = os.getenv(
-    "BEDROCK_MODEL_ID", "global.anthropic.claude-sonnet-4-6"
-)
+MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "global.anthropic.claude-sonnet-4-6")
 GATEWAY_URL = os.getenv("AGENTCORE_GATEWAY_URL", "")
 
 DEFAULT_QUERY = "What is today's news around the world?"
@@ -84,11 +82,9 @@ async def run_agent(query: str):
     print(f"  Discovered {len(tools)} tool(s)")
 
     # Create and run the agent
-    #agent = create_react_agent(model, tools=tools)
+    # agent = create_react_agent(model, tools=tools)
     agent = create_agent(model, tools=tools)
-    result = await agent.ainvoke(
-        {"messages": [{"role": "user", "content": query}]}
-    )
+    result = await agent.ainvoke({"messages": [{"role": "user", "content": query}]})
 
     # Print the final response
     print("\n[Agent Response]")
@@ -104,9 +100,7 @@ async def run_agent(query: str):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="LangChain agent with Web Search Tool via AgentCore gateway"
-    )
+    parser = argparse.ArgumentParser(description="LangChain agent with Web Search Tool via AgentCore gateway")
     parser.add_argument(
         "--query",
         default=DEFAULT_QUERY,

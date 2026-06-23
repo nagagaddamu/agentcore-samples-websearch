@@ -140,23 +140,17 @@ def _find_existing_gateway() -> dict | None:
         # List all gateways
         paginator_kwargs = {}
         while True:
-            response = client.list_gateways(
-                maxResults=50, **paginator_kwargs
-            )
+            response = client.list_gateways(maxResults=50, **paginator_kwargs)
             for gw in response.get("items", []):
                 gw_id = gw["gatewayId"]
                 # Check if this gateway has a web-search target
                 try:
-                    targets = client.list_gateway_targets(
-                        gatewayIdentifier=gw_id
-                    )
+                    targets = client.list_gateway_targets(gatewayIdentifier=gw_id)
                     for target in targets.get("items", []):
                         target_name = target.get("name", "").lower()
                         if "web-search" in target_name or "websearch" in target_name:
                             # Get the full gateway details for the URL
-                            gw_detail = client.get_gateway(
-                                gatewayIdentifier=gw_id
-                            )
+                            gw_detail = client.get_gateway(gatewayIdentifier=gw_id)
                             return {
                                 "gateway_id": gw_id,
                                 "gateway_url": gw_detail["gatewayUrl"],
@@ -191,9 +185,7 @@ def _find_cognito_for_gateway(gateway_id: str) -> dict | None:
             # Look for pools matching our naming conventions
             if "agentcore" in pool_name.lower() and "websearch" in pool_name.lower():
                 pool_id = pool["Id"]
-                clients = cognito_client.list_user_pool_clients(
-                    UserPoolId=pool_id, MaxResults=60
-                )["UserPoolClients"]
+                clients = cognito_client.list_user_pool_clients(UserPoolId=pool_id, MaxResults=60)["UserPoolClients"]
 
                 for client_info in clients:
                     if "websearch" in client_info["ClientName"].lower():
@@ -250,9 +242,7 @@ def _create_gateway_role(iam_client, role_name, account_id, region):
                 "Action": "sts:AssumeRole",
                 "Condition": {
                     "StringEquals": {"aws:SourceAccount": account_id},
-                    "ArnLike": {
-                        "aws:SourceArn": f"arn:aws:bedrock-agentcore:{region}:{account_id}:*"
-                    },
+                    "ArnLike": {"aws:SourceArn": f"arn:aws:bedrock-agentcore:{region}:{account_id}:*"},
                 },
             }
         ],
@@ -316,18 +306,14 @@ def _create_cognito_resources(cognito_client, region):
         create_resp = cognito_client.create_user_pool(PoolName=pool_name)
         user_pool_id = create_resp["UserPool"]["Id"]
         domain = user_pool_id.replace("_", "").lower()
-        cognito_client.create_user_pool_domain(
-            Domain=domain, UserPoolId=user_pool_id
-        )
+        cognito_client.create_user_pool_domain(Domain=domain, UserPoolId=user_pool_id)
         print(f"    Created user pool: {user_pool_id}")
     else:
         print(f"    User pool exists: {user_pool_id}")
 
     # Create resource server
     try:
-        cognito_client.describe_resource_server(
-            UserPoolId=user_pool_id, Identifier=resource_server_id
-        )
+        cognito_client.describe_resource_server(UserPoolId=user_pool_id, Identifier=resource_server_id)
     except cognito_client.exceptions.ResourceNotFoundException:
         cognito_client.create_resource_server(
             UserPoolId=user_pool_id,
@@ -339,13 +325,9 @@ def _create_cognito_resources(cognito_client, region):
 
     # Find or create M2M client
     client_id, client_secret = None, None
-    for client in cognito_client.list_user_pool_clients(
-        UserPoolId=user_pool_id, MaxResults=60
-    )["UserPoolClients"]:
+    for client in cognito_client.list_user_pool_clients(UserPoolId=user_pool_id, MaxResults=60)["UserPoolClients"]:
         if client["ClientName"] == "agentcore-websearch-client":
-            desc = cognito_client.describe_user_pool_client(
-                UserPoolId=user_pool_id, ClientId=client["ClientId"]
-            )
+            desc = cognito_client.describe_user_pool_client(UserPoolId=user_pool_id, ClientId=client["ClientId"])
             client_id = client["ClientId"]
             client_secret = desc["UserPoolClient"]["ClientSecret"]
             break
@@ -368,10 +350,7 @@ def _create_cognito_resources(cognito_client, region):
         print(f"    Client exists: {client_id}")
 
     domain = user_pool_id.replace("_", "").lower()
-    discovery_url = (
-        f"https://cognito-idp.{region}.amazonaws.com/{user_pool_id}"
-        f"/.well-known/openid-configuration"
-    )
+    discovery_url = f"https://cognito-idp.{region}.amazonaws.com/{user_pool_id}/.well-known/openid-configuration"
     scope_string = " ".join(scope_names)
 
     return {
@@ -390,9 +369,7 @@ def _create_gateway_and_target(gateway_client, name, role_arn, cognito_config):
         name=name,
         roleArn=role_arn,
         protocolType="MCP",
-        protocolConfiguration={
-            "mcp": {"supportedVersions": ["2025-03-26"], "searchType": "SEMANTIC"}
-        },
+        protocolConfiguration={"mcp": {"supportedVersions": ["2025-03-26"], "searchType": "SEMANTIC"}},
         authorizerType="CUSTOM_JWT",
         authorizerConfiguration={
             "customJWTAuthorizer": {
@@ -419,15 +396,11 @@ def _create_gateway_and_target(gateway_client, name, role_arn, cognito_config):
             "mcp": {
                 "connector": {
                     "source": {"connectorId": "web-search"},
-                    "configurations": [
-                        {"name": "WebSearch", "parameterValues": {}}
-                    ],
+                    "configurations": [{"name": "WebSearch", "parameterValues": {}}],
                 }
             }
         },
-        credentialProviderConfigurations=[
-            {"credentialProviderType": "GATEWAY_IAM_ROLE"}
-        ],
+        credentialProviderConfigurations=[{"credentialProviderType": "GATEWAY_IAM_ROLE"}],
     )
 
     if _wait_for_targets_ready(gateway_client, gateway_id):
@@ -470,9 +443,7 @@ def provision_gateway(gateway_name: str | None = None) -> GatewayConfig:
     # Step 3: Gateway + Target
     print("\n  [3/4] Creating AgentCore Gateway...")
     gateway_client = boto3.client("bedrock-agentcore-control", region_name=region)
-    gateway_id, gateway_url = _create_gateway_and_target(
-        gateway_client, name, role_arn, cognito_config
-    )
+    gateway_id, gateway_url = _create_gateway_and_target(gateway_client, name, role_arn, cognito_config)
 
     print("\n  [4/4] Setup complete ✓")
 
@@ -570,10 +541,14 @@ def ensure_gateway(interactive: bool = True) -> GatewayConfig:
         print("\n  Aborted. To set up manually, you can either:")
         print()
         print("    Option 1 — Use the bundled setup module:")
-        print("      python -c \"from gateway_setup import provision_gateway; cfg = provision_gateway(); cfg.print_env_vars()\"")
+        print(
+            '      python -c "from gateway_setup import provision_gateway; cfg = provision_gateway(); cfg.print_env_vars()"'
+        )
         print()
         print("    Option 2 — Use the standalone setup script:")
-        print("      python ../../01-features/03-connect-your-agent-to-anything/03-web-search/01-setup-gateway/setup_gateway.py")
+        print(
+            "      python ../../01-features/03-connect-your-agent-to-anything/03-web-search/01-setup-gateway/setup_gateway.py"
+        )
         print()
         print("  Then export the printed environment variables and re-run the agent.")
         raise SystemExit(1)

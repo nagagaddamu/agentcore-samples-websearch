@@ -67,9 +67,7 @@ def run_query(agent, query: str):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Strands agent with Web Search Tool via AgentCore gateway"
-    )
+    parser = argparse.ArgumentParser(description="Strands agent with Web Search Tool via AgentCore gateway")
     parser.add_argument(
         "--query",
         default=None,
