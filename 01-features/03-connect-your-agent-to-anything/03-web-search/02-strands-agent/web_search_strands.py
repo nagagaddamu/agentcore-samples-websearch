@@ -1,8 +1,7 @@
 """
 Web Search with a Strands AI Agent.
 
-Demonstrates a Strands agent that uses the Web Search Tool via AgentCore
-Gateway to answer real-time questions:
+Demonstrates a Strands agent that uses the Web Search Tool via AgentCore gateway to answer real-time questions:
   1. Connect to the Gateway using MCP Streamable HTTP transport
   2. Discover the WebSearch tool via tools/list
   3. Create a Strands agent with the discovered tools
