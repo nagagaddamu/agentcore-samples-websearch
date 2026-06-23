@@ -44,7 +44,7 @@ python web_search_strands.py --query "Current price of Bitcoin"
 
 ## How It Works
 
-The script connects to the Gateway, creates an agent, and runs a research query:
+The script creates an agent that connects to the Gateway, and runs a research query to the agent:
 
 ### Step 1: Connect to the Gateway
 
