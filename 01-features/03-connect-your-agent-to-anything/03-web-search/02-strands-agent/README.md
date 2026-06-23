@@ -10,7 +10,7 @@ This example shows the complete agent integration: a Strands agent automatically
 
 - Python 3.10+
 - AWS account with Amazon Bedrock enabled in **us-east-1**
-- AWS credentials with IAM, Cognito, and AgentCore Gateway permissions
+- AWS credentials with IAM, Cognito, and AgentCore gateway permissions
 - Claude Sonnet 4 model access enabled in Bedrock
 
 ```bash

@@ -1,5 +1,5 @@
 """
-Raw MCP Tool Discovery and Invocation against AgentCore Gateway.
+Raw MCP Tool Discovery and Invocation against AgentCore gateway.
 
 Demonstrates direct MCP protocol calls without an agent framework:
   1. Connect to the Gateway using MCP Streamable HTTP transport
@@ -49,7 +49,7 @@ DEFAULT_QUERY = "Tesla stock price right now?"
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Raw MCP tool discovery and invocation against AgentCore Gateway"
+        description="Raw MCP tool discovery and invocation against AgentCore gateway"
     )
     parser.add_argument(
         "--query",
@@ -63,7 +63,7 @@ def main():
     args = parse_args()
 
     print("=" * 60)
-    print("AgentCore Web Search Tool — Raw MCP Calls")
+    print("AgentCore web search tool — Raw MCP Calls")
     print("=" * 60)
 
     # Create MCP client

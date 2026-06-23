@@ -105,7 +105,7 @@ async def run_agent(query: str):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="LangChain agent with Web Search Tool via AgentCore Gateway"
+        description="LangChain agent with Web Search Tool via AgentCore gateway"
     )
     parser.add_argument(
         "--query",
@@ -119,7 +119,7 @@ def main():
     args = parse_args()
 
     print("=" * 60)
-    print("AgentCore Web Search Tool — LangChain Agent")
+    print("AgentCore web search tool — LangChain Agent")
     print("=" * 60)
     print(f"\nQuery: {args.query}\n")
 

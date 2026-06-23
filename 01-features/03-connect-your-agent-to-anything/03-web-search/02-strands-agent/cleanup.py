@@ -99,7 +99,7 @@ def main():
     region = args.region
 
     print("=" * 60)
-    print("AgentCore Web Search Tool — Resource Cleanup")
+    print("AgentCore web search tool — Resource Cleanup")
     print("=" * 60)
     print(f"\nRegion:       {region}")
     print(f"Gateway ID:   {args.gateway_id}")

@@ -12,7 +12,7 @@ Single-shot web search works for simple factual queries. For questions that requ
 |:------------|:--------|
 | Use case type | Research / Question answering |
 | Agent type | Single agent |
-| AgentCore components | AgentCore Gateway, AgentCore Runtime |
+| AgentCore components | AgentCore gateway, AgentCore runtime |
 | Agentic framework | Strands Agents |
 | LLM model | Anthropic Claude Sonnet 4 |
 | Use case vertical | Cross-vertical |
@@ -46,8 +46,8 @@ Single-shot web search works for simple factual queries. For questions that requ
 - **Configurable depth** — set `--max-iter` (or `DEEP_RESEARCH_MAX_ITER`) to tune depth vs. cost
 - **Transparent reasoning** — plan, search queries, and reflections are visible in the output
 - **Cited answers** — every factual claim is backed by a source URL
-- **AgentCore Runtime** — production-ready hosting via `BedrockAgentCoreApp`
-- **CLI + runtime modes** — run locally with `--query` or deploy to AgentCore Runtime
+- **AgentCore runtime** — production-ready hosting via `BedrockAgentCoreApp`
+- **CLI + runtime modes** — run locally with `--query` or deploy to AgentCore runtime
 
 ## Tuning the Loop
 
@@ -130,7 +130,7 @@ export COGNITO_SCOPE="agentcore-websearch/invoke"
 export AWS_DEFAULT_REGION="us-east-1"
 ```
 
-### 4. (Optional) Deploy to AgentCore Runtime
+### 4. (Optional) Deploy to AgentCore runtime
 
 For runtime deployments, environment variables **must** be pre-configured in the
 container environment (no interactive provisioning in runtime mode):
@@ -140,7 +140,7 @@ container environment (no interactive provisioning in runtime mode):
 python deep_research_agent.py  # starts the runtime server when deployed
 ```
 
-When deployed, invoke via the AgentCore Runtime API:
+When deployed, invoke via the AgentCore runtime API:
 
 ```json
 {
@@ -199,7 +199,7 @@ See the Prerequisites section above for the full list of permissions needed to c
 
 | File | Description |
 |:-----|:------------|
-| `deep_research_agent.py` | Main agent — Plan/Search/Reflect loop, AgentCore Runtime entrypoint, and CLI |
+| `deep_research_agent.py` | Main agent — Plan/Search/Reflect loop, AgentCore runtime entrypoint, and CLI |
 | `gateway_setup.py` | Auto-detection and provisioning of Gateway + Web Search infrastructure |
 | `cleanup.py` | Deletes all provisioned AWS resources and local credentials |
 | `requirements.txt` | Python dependencies |
@@ -218,7 +218,7 @@ The system prompt encodes the loop directly. Claude:
 
 ### Gateway Integration
 
-The agent connects to AgentCore Gateway via MCP Streamable HTTP. The Gateway exposes the Web Search connector as a standard MCP `WebSearch` tool. Tool discovery (`tools/list`) and invocation (`tools/call`) happen automatically through the Strands `MCPClient`.
+The agent connects to AgentCore gateway via MCP Streamable HTTP. The Gateway exposes the Web Search connector as a standard MCP `WebSearch` tool. Tool discovery (`tools/list`) and invocation (`tools/call`) happen automatically through the Strands `MCPClient`.
 
 ### Auth Flow
 
@@ -232,4 +232,4 @@ deep_research_agent.py
 ## Related Resources
 
 - [`01-features/03-connect-your-agent-to-anything/03-web-search/`](../../../01-features/03-connect-your-agent-to-anything/03-web-search/) — Gateway setup, raw MCP, and basic agent demos
-- [AgentCore Gateway documentation](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html)
+- [AgentCore gateway documentation](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html)

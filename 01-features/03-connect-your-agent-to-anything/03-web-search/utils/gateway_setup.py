@@ -1,10 +1,10 @@
 """
-Set up AgentCore Gateway with Web Search Tool Target.
+Set up AgentCore gateway with Web Search Tool Target.
 
 Creates all required infrastructure for the Web Search Tool:
   1. IAM service role for the Gateway (with InvokeWebSearch permission)
   2. Cognito User Pool with client_credentials OAuth flow
-  3. AgentCore Gateway with MCP protocol and JWT authorization
+  3. AgentCore gateway with MCP protocol and JWT authorization
   4. Web Search Tool connector target
 
 After running this script, load credentials with `source .env.web-search` to use
@@ -13,7 +13,7 @@ with the other demos in this folder.
 Prerequisites:
     pip install -r ../requirements.txt
     AWS credentials with permissions to create IAM roles, Cognito pools,
-    and AgentCore Gateways.
+    and AgentCore gateway.
 
 IAM permissions required:
     iam:CreateRole, iam:PutRolePolicy, iam:GetRole
@@ -217,7 +217,7 @@ def create_cognito_resources(cognito_client, region):
 
 
 def create_gateway(gateway_client, name, role_arn, cognito_config):
-    """Create the AgentCore Gateway with MCP protocol."""
+    """Create the AgentCore gateway with MCP protocol."""
     create_response = gateway_client.create_gateway(
         name=name,
         roleArn=role_arn,
@@ -232,7 +232,7 @@ def create_gateway(gateway_client, name, role_arn, cognito_config):
                 "discoveryUrl": cognito_config["discovery_url"],
             }
         },
-        description="AgentCore Gateway with Web Search Tool",
+        description="AgentCore gateway with Web Search Tool",
     )
 
     gateway_id = create_response["gatewayId"]
@@ -282,7 +282,7 @@ def create_web_search_target(gateway_client, gateway_id):
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="Set up AgentCore Gateway with Web Search Tool target"
+        description="Set up AgentCore gateway with Web Search Tool target"
     )
     parser.add_argument(
         "--gateway-name",
@@ -302,7 +302,7 @@ def main():
     region = args.region
 
     print("=" * 60)
-    print("AgentCore Web Search Tool — Gateway Setup")
+    print("AgentCore web search tool — Gateway Setup")
     print("=" * 60)
 
     # Get account ID
@@ -323,7 +323,7 @@ def main():
     cognito_config = create_cognito_resources(cognito_client, region)
 
     # Step 3: Gateway
-    print("\n[3/4] Creating AgentCore Gateway...")
+    print("\n[3/4] Creating AgentCore gateway...")
     gateway_client = boto3.client("bedrock-agentcore-control", region_name=region)
     gateway_id, gateway_url = create_gateway(
         gateway_client, args.gateway_name, role_arn, cognito_config

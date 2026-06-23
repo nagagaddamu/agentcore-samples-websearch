@@ -560,7 +560,7 @@ def ensure_gateway(interactive: bool = True) -> GatewayConfig:
     print("    • AgentCore Gateway (MCP protocol)")
     print("    • Web Search connector target")
     print()
-    print("  Region: us-east-1 (only supported region for Web Search)")
+    print(f"  Region:  {REGION}")
     print("  Estimated time: ~60 seconds")
     print("-" * 60)
 

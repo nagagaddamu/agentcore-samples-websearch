@@ -1,4 +1,4 @@
-"""Set up AgentCore Gateway with Web Search Tool — delegates to shared utility.
+"""Set up AgentCore gateway with Web Search Tool — delegates to shared utility.
 After running this script, load credentials with `source .env.web-search` to use
 with the other web search examples.
 
